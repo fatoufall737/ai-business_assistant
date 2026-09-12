@@ -107,3 +107,25 @@ Classe : négatif — malgré la mention positive de la rapidité, le commentair
 
 **Observation**
 Avec un seul exemple fourni, le modèle se conforme immédiatement au format attendu : une classe unique parmi les 3 proposées, sans ajouter de catégorie supplémentaire comme en zero-shot. Un seul exemple a donc suffi à cadrer la sortie, même si le raisonnement reste bref.
+
+### Tâche 3 : Few-shot
+
+**Prompt utilisé**
+
+Voici des exemples :
+Commentaire : "Livraison rapide et sans problème." → positif
+Commentaire : "Commande jamais arrivée, aucun remboursement." → négatif
+Commentaire : "Application correcte, rien de spécial à signaler." → neutre
+
+Classe maintenant ce commentaire :
+"Le service est rapide mais l'application plante régulièrement."
+Classes possibles : positif, négatif, neutre.
+
+**Réponse obtenue**
+Classe : négatif — le modèle compare explicitement ce commentaire au deuxième exemple fourni ("commande jamais arrivée"), jugeant le défaut technique récurrent plus impactant que l'avantage de rapidité mentionné.
+
+**Capture d'écran**
+![Réponse few-shot](./partie2_fewshot.png)
+
+**Observation**
+Même classe qu'en one-shot ("négatif"), mais le raisonnement du modèle s'appuie ici explicitement sur les exemples fournis pour justifier son choix par analogie. Le few-shot ne change pas seulement la sortie attendue : il influence aussi le style de raisonnement, qui imite la logique de comparaison montrée dans les exemples.
