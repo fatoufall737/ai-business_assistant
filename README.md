@@ -69,3 +69,20 @@ Réponds uniquement en JSON avec les champs suivants :
 ### Remarque
 
 Deux avis étaient explicitement mixtes (ex. un avis satisfait du service de trajets mais critique sur la livraison). Conformément à la contrainte donnée, ils n'ont pas été forcés dans une catégorie unique.
+
+## Partie 2 – Comparer les techniques de prompting
+
+### Tâche 1 : Zero-shot
+
+**Prompt utilisé**
+Classe le commentaire suivant : "Le service est rapide mais l'application plante régulièrement."
+Classes possibles : positif, négatif, neutre.
+
+**Réponse obtenue**
+Classe : Mixte / plutôt négatif — le commentaire contient un point positif ("service rapide") et un point négatif plus impactant ("plantages réguliers"). Le modèle propose "négatif" par défaut mais suggère qu'une catégorie "mixte" serait plus précise pour ce type de retour à double tranchant.
+
+**Capture d'écran**
+![Réponse zero-shot](./partie2_zeroshot.png)
+
+**Observation**
+Sans contrainte de format, le modèle ne se limite pas aux 3 classes demandées : il argumente, nuance sa réponse et propose même une catégorie supplémentaire ("mixte") non prévue dans la consigne. La réponse est pertinente sur le fond, mais peu exploitable telle quelle par un programme (pas de sortie unique et fixe).
