@@ -86,3 +86,24 @@ Classe : Mixte / plutôt négatif — le commentaire contient un point positif (
 
 **Observation**
 Sans contrainte de format, le modèle ne se limite pas aux 3 classes demandées : il argumente, nuance sa réponse et propose même une catégorie supplémentaire ("mixte") non prévue dans la consigne. La réponse est pertinente sur le fond, mais peu exploitable telle quelle par un programme (pas de sortie unique et fixe).
+
+### Tâche 2 : One-shot
+
+**Prompt utilisé**
+
+Voici un exemple :
+Commentaire : "Livraison rapide et sans problème."
+Classe : positif
+
+Classe maintenant ce commentaire :
+"Le service est rapide mais l'application plante régulièrement."
+Classes possibles : positif, négatif, neutre.
+
+**Réponse obtenue**
+Classe : négatif — malgré la mention positive de la rapidité, le commentaire met en avant un problème significatif et récurrent (l'application qui plante), ce qui domine l'impression générale.
+
+**Capture d'écran**
+![Réponse one-shot](./partie2_oneshot.png)
+
+**Observation**
+Avec un seul exemple fourni, le modèle se conforme immédiatement au format attendu : une classe unique parmi les 3 proposées, sans ajouter de catégorie supplémentaire comme en zero-shot. Un seul exemple a donc suffi à cadrer la sortie, même si le raisonnement reste bref.
