@@ -208,3 +208,53 @@ Analyse ces avis et identifie : les 3 problèmes les plus importants, ainsi qu'u
 Contraintes : base-toi uniquement sur les avis fournis, n'invente aucune information absente.
 
 Format : une liste à puces, avec pour chaque problème une recommandation associée.
+
+### Tâche 2 : Analyse + auto-vérification
+
+**Prompt A — Analyse initiale**
+
+Tu es un analyste customer experience.
+
+Voici des avis clients de l'application Yassir :
+[les 6 avis Yassir de la Partie 1]
+
+Analyse ces avis et identifie les 3 problèmes les plus importants ainsi qu'une recommandation pour chacun.
+
+Contraintes : base-toi uniquement sur les avis fournis, n'invente aucune information absente.
+
+Format : liste à puces.
+
+**Réponse au Prompt A**
+
+- Problème 1 : Annulations de commandes après un long délai d'attente (avis 1 et 6)
+- Problème 2 : Lenteur du service de livraison et de l'application (avis 2, 3, 5)
+- Problème 3 : Erreurs de commande sans remboursement, frais imposés par certains chauffeurs (avis 3 et 6)
+
+**Capture d'écran**
+![Réponse Prompt A](./partie3_promptA.png)
+
+**Prompt B — Auto-vérification**
+
+Vérifie ta réponse précédente. Pour chaque problème et recommandation mentionné, indique :
+
+S'il est bien justifié par les avis fournis (ou s'il s'agit d'une supposition non appuyée)
+S'il y a des contradictions internes dans ta réponse
+Si des informations utilisées ne figurent dans aucun des avis originaux (hallucination)
+Si tu as bien respecté la contrainte de ne rien inventer
+
+Corrige ta réponse si nécessaire.
+
+**Réponse au Prompt B**
+Aucune information inventée détectée, mais plusieurs faiblesses identifiées par le modèle lui-même :
+
+- Le problème 1 mélangeait deux situations différentes (annulation après attente vs. annulation demandée par le chauffeur)
+- Le problème 2 regroupait deux causes distinctes (lenteur de livraison vs. lenteur de l'application)
+- L'avis 4 (prix élevés) n'avait été utilisé dans aucun des 3 problèmes de la réponse initiale
+
+Une réponse corrigée a été proposée, avec des problèmes redéfinis plus précisément et l'avis 4 intégré.
+
+**Capture d'écran**
+![Réponse Prompt B](./partie3_promptB.png)
+
+**Observation**
+Le second prompt (auto-vérification) a permis de détecter des faiblesses invisibles dans la première réponse : pas d'hallucination pure, mais des regroupements trompeurs et un avis complètement ignoré. Cela montre l'intérêt d'un prompt de contrôle systématique après une tâche d'analyse, même quand la première réponse semble déjà convaincante.
