@@ -587,3 +587,45 @@ Format : une section par visualisation proposée.
 
 **Observation**
 Les 6 visualisations proposées couvrent une progression logique : de l'analyse univariée (distribution) à l'analyse multivariée (pairplot), en passant par la relation avec la variable cible `status`. Le raisonnement métier est systématique (chaque graphique est justifié par une hypothèse exploitable, ex : maintenance prédictive, surchauffe), ce qui dépasse une simple liste technique de graphiques.
+
+### Tâche 3 : Modèles adaptés à la prédiction de la consommation
+
+**Prompt utilisé**
+
+Tu es un expert en machine learning.
+
+Contexte : Dataset de capteurs IoT, 605 lignes, colonnes : temperature (float), humidity (float), pressure (float), consumption (float), status (catégorielle : normal/alerte/critique).
+
+Propose plusieurs modèles adaptés à la prédiction de la consommation énergétique d'un bâtiment (variable consumption, à prédire à partir des autres variables).
+
+Pour chaque modèle, indique :
+
+Le principe de fonctionnement
+Les avantages
+Les limites
+Le type de problème concerné (régression, classification...)
+Les métriques pertinentes pour l'évaluer
+
+Format : une section par modèle proposé.
+
+**Réponse obtenue (synthèse)**
+
+| Modèle                               | Type       | Avantage clé                                          | Limite clé                                                             |
+| ------------------------------------ | ---------- | ----------------------------------------------------- | ---------------------------------------------------------------------- |
+| Régression linéaire multiple         | Régression | Interprétable, bonne baseline                         | Suppose une relation linéaire, sensible aux outliers                   |
+| Random Forest Regressor              | Régression | Capture relations non linéaires, robuste aux outliers | Moins interprétable, risque d'overfitting sur 605 lignes               |
+| Gradient Boosting (XGBoost/LightGBM) | Régression | Très performant sur données tabulaires                | Nombreux hyperparamètres, overfitting possible sans validation croisée |
+| Support Vector Regression (SVR)      | Régression | Efficace même avec peu de données                     | Sensible aux hyperparamètres, nécessite normalisation                  |
+| Réseau de neurones (MLP Regressor)   | Régression | Modélise des relations très complexes                 | Risque élevé d'overfitting sur un petit dataset, peu interprétable     |
+
+Métriques communes recommandées : RMSE, MAE, R² (+ validation croisée pour tous les modèles, vu la taille limitée du dataset).
+
+**Capture d'écran**
+![Modèles 1](./partie6_modeles1.png)
+![Modèles 2](./partie6_modeles2.png)
+![Modèles 3](./partie6_modeles2.png)
+**Recommandation du modèle (donnée par Claude)**
+Privilégier la régression linéaire comme baseline interprétable, puis comparer avec Random Forest ou Gradient Boosting (meilleur compromis performance/robustesse sur données tabulaires modestes), avec validation croisée systématique vu le faible volume de données (605 lignes).
+
+**Observation**
+Le modèle identifie correctement qu'il s'agit d'un problème de régression (variable cible continue) et adapte systématiquement son analyse à la contrainte réelle du dataset : sa petite taille (605 lignes) est mentionnée comme facteur de risque pour chaque modèle complexe proposé, ce qui montre une prise en compte fine du contexte plutôt qu'une réponse générique.
