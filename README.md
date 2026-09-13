@@ -702,3 +702,25 @@ Exemple clé retenu : une RMSE de 8 kWh alors que la MAE est de 5 kWh indique qu
 ![Métriques régression 2](./partie6_metriques_regression4.png)
 **Observation**
 Le modèle explique clairement la relation entre RMSE et MAE comme indicateur indirect de la présence d'outliers (écart important entre les deux = quelques erreurs extrêmes), et relie systématiquement chaque métrique à un enjeu métier réel (dimensionnement électrique, risque de surcharge réseau) plutôt qu'à une simple définition mathématique abstraite.
+
+## Partie 7 – Prompt Engineering et RAG
+
+### Tâche 1 — Prompt A (sans document)
+
+**Prompt testé**
+
+Quel a été le taux d'annulation des commandes du service de livraison au 3e
+trimestre 2026, et quelles actions ont été recommandées pour l'améliorer ?
+
+**Réponse obtenue (synthèse)**
+
+Le modèle indique ne pas avoir accès à un rapport spécifique sur ce sujet et refuse d'inventer un chiffre ou des recommandations précises. Il propose deux alternatives : recevoir le document en question, ou obtenir des informations générales et non chiffrées sur les causes typiques d'annulation dans les services de livraison.
+
+**Capture d'écran**
+![Prompt A - sans document](./screenshots/partie7_prompt_a.png)
+
+**Observation**
+
+Le modèle s'est correctement abstenu d'halluciner un taux d'annulation ou des recommandations spécifiques, malgré une question formulée de façon très précise (trimestre, année, métrique exacte) qui aurait pu l'inciter à "combler" le vide par une réponse plausible mais fausse. Il distingue clairement ce qu'il peut faire sans le document (généralités sectorielles) de ce qu'il ne peut pas faire (chiffres propres au rapport).
+
+⚠️ **Point méthodologique** : un premier test de ce même prompt, mené dans une conversation ayant déjà accès à un autre rapport fictif (construit plus tôt dans l'atelier), avait produit des chiffres exacts alors qu'aucun document n'avait été fourni — en raison d'un accès implicite via l'historique de conversation / la fonctionnalité "Rechercher dans les conversations passées". Ce biais a été neutralisé pour ce test en réutilisant la conversation d'origine, distincte de celle contenant le rapport concerné par la question.
