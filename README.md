@@ -301,3 +301,45 @@ Exemple de résultat attendu :
 
 **Observation**
 Le modèle respecte parfaitement la structure demandée : JSON valide, les 5 champs présents, valeurs de `sentiment` et `urgence` conformes aux options autorisées, catégorie cohérente avec le problème identifié.
+
+### Tâche 2 : Ajout des règles de validation
+
+**Prompt utilisé**
+
+Analyse ce commentaire client : "Le service est rapide mais l'application plante régulièrement."
+
+Extrais les informations suivantes et réponds en JSON avec les champs :
+
+sentiment
+categorie
+urgence
+probleme
+confiance
+
+Règles de validation strictes à respecter :
+
+Le JSON doit être valide (syntaxe correcte, guillemets doubles, pas de virgule finale)
+Aucune propriété supplémentaire ne doit être ajoutée en dehors des 5 champs listés
+"sentiment" doit obligatoirement valoir "positif", "negatif" ou "neutre" — aucune autre valeur n'est acceptée
+"confiance" doit être un nombre décimal compris entre 0 et 1 (inclus)
+"urgence" doit obligatoirement valoir "faible", "moyenne" ou "élevée" — aucune autre valeur n'est acceptée
+
+Ne réponds qu'avec le JSON, sans texte avant ou après.
+
+**Réponse obtenue**
+
+```json
+{
+  "sentiment": "negatif",
+  "categorie": "application",
+  "urgence": "moyenne",
+  "probleme": "Plantages réguliers de l'application",
+  "confiance": 0.85
+}
+```
+
+**Capture d'écran**
+![Réponse validation](./partie4_validation.png)
+
+**Observation**
+La réponse est identique à celle de la Tâche 1 : le modèle respectait déjà spontanément ces règles. L'intérêt des règles de validation explicites n'est donc pas visible ici, mais elles servent de garde-fou pour des cas plus ambigus ou pour garantir un comportement fiable et reproductible à grande échelle (traitement automatisé de nombreux commentaires, où une seule sortie mal formée peut casser un programme).
