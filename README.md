@@ -882,3 +882,24 @@ Le modèle produit un résumé structuré en deux blocs (points positifs / point
 **Observation**
 
 Sans consigne de longueur ni de format, le modèle a spontanément choisi une structuration par thème (positif/négatif) plutôt qu'un résumé linéaire, et a même ajouté une phrase de synthèse interprétative non demandée ("tendance générale"). Le résultat est déjà exploitable, mais sa longueur et son niveau de détail dépendent entièrement du jugement du modèle, sans garantie de reproductibilité si le texte source était plus long.
+
+markdown
+
+### Tâche 2 — Prompt B (résumé en 150 mots)
+
+**Prompt testé**
+
+Résume ce texte en 150 mots.
+
+[6 retours clients Yassir - voir annexe]
+
+**Réponse obtenue (synthèse)**
+
+Le modèle produit un résumé linéaire (paragraphe unique, pas de liste à puces), qui couvre les mêmes thèmes que le Prompt A mais de façon plus condensée et fluide, avec des transitions entre les points. Chaque affirmation reste associée au(x) numéro(s) d'avis correspondant(s). Le résumé se termine par une phrase de synthèse sur les axes d'amélioration attendus.
+
+**Capture d'écran**
+![Prompt B - resume 150 mots](./screenshots/partie8_prompt_b.png)
+
+**Observation**
+
+Le respect de la contrainte de longueur (~150 mots) a poussé le modèle vers un format différent de celui du Prompt A : plutôt qu'une liste par thème, il privilégie un texte continu, plus dense en information par mot mais moins facile à scanner rapidement qu'une liste à puces. La contrainte de longueur seule ne dit rien sur le format attendu (liste ? paragraphe ? public visé ?) — c'est un choix que le modèle a fait de lui-même, ce qui montre la limite d'un prompt qui ne spécifie qu'un seul paramètre.
