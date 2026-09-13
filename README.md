@@ -175,3 +175,36 @@ Le prompt structuré produit une sortie directement exploitable par un programme
 ### Conclusion de la Partie 2
 
 Plus le prompt est précis (exemples fournis, puis structure imposée), plus la réponse converge vers une classification claire et cohérente. Seul le prompt structuré garantit une sortie fiable et exploitable automatiquement, ce qui en fait le choix le plus adapté pour une intégration réelle dans une application.
+
+## Partie 3 – Prompt Engineering et raisonnement
+
+### Tâche 1 : Décomposition d'un prompt
+
+**Prompt à décomposer**
+
+Analyse ces avis clients et donne-moi les problèmes les plus importants ainsi que les recommandations.
+
+**Analyse des composantes**
+
+| Composante  | Présente ? | Détail                                                                            |
+| ----------- | ---------- | --------------------------------------------------------------------------------- |
+| Rôle        | Absent     | Aucune identité donnée au modèle                                                  |
+| Contexte    | Absent     | "Ces avis clients" est mentionné mais jamais fourni — faille principale du prompt |
+| Tâche       | Présente   | Claire sur le fond : identifier problèmes + recommandations                       |
+| Contraintes | Absentes   | Aucune limite (nombre de problèmes, niveau de factualité...)                      |
+| Format      | Absent     | Aucune indication sur la structure de sortie attendue                             |
+
+**Constat**
+Ce prompt donne une tâche claire mais omet de fournir la matière première (le contexte) et n'encadre pas la sortie. Envoyé tel quel, un LLM risque soit de répondre de façon générique, soit d'halluciner des avis imaginaires pour pouvoir répondre.
+
+**Version corrigée**
+
+Tu es un analyste customer experience.
+
+Voici des avis clients : [COLLER LES AVIS ICI]
+
+Analyse ces avis et identifie : les 3 problèmes les plus importants, ainsi qu'une recommandation pour chacun.
+
+Contraintes : base-toi uniquement sur les avis fournis, n'invente aucune information absente.
+
+Format : une liste à puces, avec pour chaque problème une recommandation associée.
