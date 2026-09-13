@@ -258,3 +258,46 @@ Une réponse corrigée a été proposée, avec des problèmes redéfinis plus pr
 
 **Observation**
 Le second prompt (auto-vérification) a permis de détecter des faiblesses invisibles dans la première réponse : pas d'hallucination pure, mais des regroupements trompeurs et un avis complètement ignoré. Cela montre l'intérêt d'un prompt de contrôle systématique après une tâche d'analyse, même quand la première réponse semble déjà convaincante.
+
+## Partie 4 – Sorties structurées
+
+### Tâche 1 : Réponse au format JSON
+
+**Prompt utilisé**
+
+Analyse ce commentaire client : "Le service est rapide mais l'application plante régulièrement."
+
+Extrais les informations suivantes et réponds uniquement en JSON avec les champs :
+
+sentiment (chaîne de caractères, valeurs autorisées : "positif", "negatif", "neutre")
+categorie (chaîne de caractères, ex : "livraison", "application", "prix", "service client"...)
+urgence (chaîne de caractères, valeurs autorisées : "faible", "moyenne", "élevée")
+probleme (chaîne de caractères, description courte du problème principal)
+confiance (nombre décimal entre 0 et 1, ton niveau de certitude)
+
+Exemple de résultat attendu :
+{
+"sentiment": "negatif",
+"categorie": "livraison",
+"urgence": "moyenne",
+"probleme": "Retard de livraison",
+"confiance": 0.91
+}
+
+**Réponse obtenue**
+
+```json
+{
+  "sentiment": "negatif",
+  "categorie": "application",
+  "urgence": "moyenne",
+  "probleme": "Plantages réguliers de l'application",
+  "confiance": 0.85
+}
+```
+
+**Capture d'écran**
+![Réponse JSON](./partie4_json.png)
+
+**Observation**
+Le modèle respecte parfaitement la structure demandée : JSON valide, les 5 champs présents, valeurs de `sentiment` et `urgence` conformes aux options autorisées, catégorie cohérente avec le problème identifié.
