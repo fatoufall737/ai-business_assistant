@@ -724,3 +724,29 @@ Le modèle indique ne pas avoir accès à un rapport spécifique sur ce sujet et
 Le modèle s'est correctement abstenu d'halluciner un taux d'annulation ou des recommandations spécifiques, malgré une question formulée de façon très précise (trimestre, année, métrique exacte) qui aurait pu l'inciter à "combler" le vide par une réponse plausible mais fausse. Il distingue clairement ce qu'il peut faire sans le document (généralités sectorielles) de ce qu'il ne peut pas faire (chiffres propres au rapport).
 
 ⚠️ **Point méthodologique** : un premier test de ce même prompt, mené dans une conversation ayant déjà accès à un autre rapport fictif (construit plus tôt dans l'atelier), avait produit des chiffres exacts alors qu'aucun document n'avait été fourni — en raison d'un accès implicite via l'historique de conversation / la fonctionnalité "Rechercher dans les conversations passées". Ce biais a été neutralisé pour ce test en réutilisant la conversation d'origine, distincte de celle contenant le rapport concerné par la question.
+
+### Tâche 2 — Prompt B (avec document, sans contrainte)
+
+**Document fourni**
+Rapport interne "Service Livraison — 3e trimestre 2026" (reconstitution,
+l'original ayant été créé dans une conversation antérieure non conservée) —
+voir le rapport complet en annexe du fichier.
+
+**Prompt testé**
+
+Voici un rapport interne :
+[rapport complet - voir annexe]
+
+Quel a été le taux d'annulation des commandes du service de livraison au 3e
+trimestre 2026, et quelles actions ont été recommandées pour l'améliorer ?
+
+**Réponse obtenue (synthèse)**
+
+Le modèle restitue correctement le taux d'annulation (6,1 % au T3 2026, contre 8,2 % au T2, toujours au-dessus de l'objectif de 5 %) et liste les trois actions recommandées, en les reliant explicitement aux causes d'annulation correspondantes (synchronisation des prix ↔ 42 % des annulations, renfort des effectifs ↔ 28 %, contrôle des frais additionnels des livreurs).
+
+**Capture d'écran**
+![Prompt B - avec document](./screenshots/partie7_prompt_b.png)
+
+**Observation**
+
+Le modèle a correctement extrait et restitué les informations du document, sans erreur ni invention. Il va même au-delà d'une simple restitution : il souligne de lui-même que la 3e cause d'annulation (erreurs/ruptures de stock, 18 %) n'est couverte par aucune action du plan — une observation critique pertinente, non demandée explicitement, qui montre une lecture analytique du document plutôt qu'un simple copier-coller d'information.
