@@ -667,3 +667,38 @@ Chaque métrique a été illustrée avec le même exemple concret : détecter le
 
 **Observation**
 Le modèle relie systématiquement chaque métrique au même scénario concret (détection de "critique"), ce qui rend l'explication cohérente et applicable directement au dataset de l'atelier. Il ajoute même une nuance avancée non demandée (la courbe Precision-Recall comme alternative à l'AUC en cas de fort déséquilibre), ce qui dépasse une simple définition de cours.
+
+### Tâche 5 : Métriques de régression
+
+**Prompt utilisé**
+
+Tu es un expert en machine learning.
+
+Explique les métriques de régression suivantes : MAE, MSE, RMSE.
+
+Pour chaque métrique, indique :
+
+La définition
+Comment l'interpréter
+Un exemple concret (par exemple appliqué à la prédiction de la consommation énergétique en kWh)
+Dans quel contexte elle est particulièrement utile
+
+Format : une section par métrique.
+
+**Réponse obtenue (synthèse)**
+
+| Métrique | Définition                   | Sensible aux outliers ? | Utile quand...                                                                    |
+| -------- | ---------------------------- | ----------------------- | --------------------------------------------------------------------------------- |
+| MAE      | Moyenne des erreurs absolues | Non (robuste)           | Toutes les erreurs comptent également, interprétation simple                      |
+| MSE      | Moyenne des erreurs au carré | Oui (fortement)         | Les grosses erreurs doivent être pénalisées, fonction de perte à l'entraînement   |
+| RMSE     | Racine du MSE                | Oui                     | Comparer des modèles, détecter la présence d'outliers de prédiction (RMSE >> MAE) |
+
+Exemple clé retenu : une RMSE de 8 kWh alors que la MAE est de 5 kWh indique que certaines prédictions s'écartent beaucoup plus que la moyenne (quelques pics de consommation mal anticipés).
+
+**Capture d'écran**
+![Métriques régression 1](./partie6_metriques_regression1.png)
+![Métriques régression 2](./partie6_metriques_regression2.png)
+![Métriques régression 1](./partie6_metriques_regression3.png)
+![Métriques régression 2](./partie6_metriques_regression4.png)
+**Observation**
+Le modèle explique clairement la relation entre RMSE et MAE comme indicateur indirect de la présence d'outliers (écart important entre les deux = quelques erreurs extrêmes), et relie systématiquement chaque métrique à un enjeu métier réel (dimensionnement électrique, risque de surcharge réseau) plutôt qu'à une simple définition mathématique abstraite.
