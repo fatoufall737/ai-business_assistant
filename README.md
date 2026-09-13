@@ -129,3 +129,49 @@ Classe : négatif — le modèle compare explicitement ce commentaire au deuxiè
 
 **Observation**
 Même classe qu'en one-shot ("négatif"), mais le raisonnement du modèle s'appuie ici explicitement sur les exemples fournis pour justifier son choix par analogie. Le few-shot ne change pas seulement la sortie attendue : il influence aussi le style de raisonnement, qui imite la logique de comparaison montrée dans les exemples.
+
+### Tâche 4 : Prompt structuré
+
+**Prompt utilisé**
+
+Tu es un système de classification de commentaires clients.
+
+Commentaire à classer : "Le service est rapide mais l'application plante régulièrement."
+
+Classes possibles : positif, négatif, neutre.
+
+Contraintes : si le commentaire contient à la fois un élément positif et négatif, choisis la classe qui reflète le sentiment dominant. Ne donne aucune explication.
+
+Réponds uniquement au format JSON :
+{
+"classe": "...",
+"justification": "..."
+}
+
+**Réponse obtenue**
+
+```json
+{
+  "classe": "négatif",
+  "justification": "Le plantage récurrent de l'application est un défaut dominant qui l'emporte sur la rapidité du service."
+}
+```
+
+**Capture d'écran**
+![Réponse prompt structuré](./partie2_structure.png)
+
+**Observation**
+Le prompt structuré produit une sortie directement exploitable par un programme (JSON valide, un seul champ de classe), avec une justification concise imposée par la contrainte "ne donne aucune explication". C'est la seule des 4 techniques à garantir un format fixe et prévisible.
+
+### Comparaison des 4 techniques
+
+| Technique            | Classe obtenue         | Format de sortie                     | Exploitable par un programme ?        |
+| -------------------- | ---------------------- | ------------------------------------ | ------------------------------------- |
+| Zero-shot            | Mixte / plutôt négatif | Texte libre, argumenté               | Non — pas de classe unique            |
+| One-shot             | Négatif                | Texte court                          | Difficilement — pas de structure fixe |
+| Few-shot             | Négatif                | Texte avec raisonnement par analogie | Difficilement — pas de structure fixe |
+| **Prompt structuré** | **Négatif**            | **JSON strict**                      | **Oui — directement**                 |
+
+### Conclusion de la Partie 2
+
+Plus le prompt est précis (exemples fournis, puis structure imposée), plus la réponse converge vers une classification claire et cohérente. Seul le prompt structuré garantit une sortie fiable et exploitable automatiquement, ce qui en fait le choix le plus adapté pour une intégration réelle dans une application.
