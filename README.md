@@ -476,3 +476,42 @@ Montant TTC : 177 000 FCFA"
 
 **Observation**
 Les 6 champs sont correctement extraits et les montants sont convertis en nombres purs (sans "FCFA" ni espaces), ce qui les rend directement exploitables par un programme. Aucun champ absent ici, donc la règle du `null` n'a pas pu être testée dans ce cas — un test avec une facture incomplète permettrait de vérifier ce comportement.
+
+### Tâche 5 : Email client (retard de livraison)
+
+**Prompt utilisé**
+
+Rédige un email destiné à un client dont la livraison a pris du retard.
+
+Objectifs :
+
+Reconnaître le retard
+Présenter des excuses
+Expliquer la situation sans inventer de cause précise
+Proposer une solution
+
+Ton : professionnel, courtois et rassurant.
+
+Longueur maximale : 150 mots.
+
+**Réponse obtenue**
+Subject: Retard de votre livraison — nos excuses
+
+Bonjour,
+
+Nous vous contactons au sujet du retard survenu dans la livraison de votre commande. Nous en sommes sincèrement désolés et comprenons la gêne que cela a pu occasionner.
+
+Ce retard est dû à un incident ponctuel dans notre chaîne logistique, actuellement en cours de résolution par nos équipes.
+
+Afin de nous excuser pour ce désagrément, nous vous proposons [un geste commercial / un suivi prioritaire de votre commande / une remise sur votre prochaine commande]. N'hésitez pas à nous indiquer l'option que vous préférez.
+
+Nous mettons tout en œuvre pour que votre commande vous parvienne dans les meilleurs délais et vous remercions sincèrement pour votre patience et votre confiance.
+
+Cordialement,
+L'équipe [Nom de l'entreprise]
+
+**Capture d'écran**
+![Réponse email](./partie5_email.png)
+
+**Observation**
+La plupart des objectifs sont respectés (reconnaissance du retard, excuses, solution proposée, ton adapté, longueur ~120 mots). Un écart notable cependant : la contrainte demandait explicitement de ne pas inventer de cause précise, mais le modèle propose quand même "un incident ponctuel dans notre chaîne logistique" — une explication plausible mais non fondée sur une information réelle. Cela illustre une tendance du modèle à combler les vides même quand on lui demande explicitement de ne pas le faire, si l'absence d'explication semble socialement ou commercialement inconfortable.
