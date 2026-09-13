@@ -343,3 +343,39 @@ Ne réponds qu'avec le JSON, sans texte avant ou après.
 
 **Observation**
 La réponse est identique à celle de la Tâche 1 : le modèle respectait déjà spontanément ces règles. L'intérêt des règles de validation explicites n'est donc pas visible ici, mais elles servent de garde-fou pour des cas plus ambigus ou pour garantir un comportement fiable et reproductible à grande échelle (traitement automatisé de nombreux commentaires, où une seule sortie mal formée peut casser un programme).
+
+## Partie 5 – Prompts pour les applications métier
+
+### Tâche 1 : Résumé de document
+
+**Prompt utilisé**
+
+Résume le texte suivant.
+
+Contraintes :
+
+Maximum 250 mots
+Conserver uniquement les informations factuelles
+Identifier clairement les objectifs
+Identifier clairement les résultats
+Identifier clairement les recommandations
+N'invente aucune information absente du texte
+
+Texte : [rapport d'activité trimestriel — Service Livraison T3 2026]
+
+**Réponse obtenue**
+[colle ici la réponse complète que Claude a donnée]
+
+**Capture d'écran**
+![Réponse résumé](./partie5_resume.png)
+
+**Observation**
+Malgré des contraintes précises dans le prompt, la réponse ne les respecte pas totalement :
+
+- Longueur largement supérieure à 250 mots
+- Ajout d'interprétations non factuelles ("c'est probablement le principal frein", "potentiellement lié à...") alors que la contrainte demandait de rester factuel
+- Une question hors-sujet ajoutée à la fin ("Souhaitez-vous que je transforme cette analyse en Word ?")
+
+Points positifs : structure claire (tableau), bonne identification des objectifs/résultats/recommandations, aucune donnée chiffrée inventée.
+
+Ce résultat montre qu'une contrainte énoncée dans le prompt n'est pas toujours suffisante pour garantir un respect strict — une formulation plus impérative (ex : "ne réponds qu'avec le résumé, sans aucun texte additionnel, question ou proposition") serait nécessaire pour un usage réellement automatisé.
