@@ -515,3 +515,33 @@ L'équipe [Nom de l'entreprise]
 
 **Observation**
 La plupart des objectifs sont respectés (reconnaissance du retard, excuses, solution proposée, ton adapté, longueur ~120 mots). Un écart notable cependant : la contrainte demandait explicitement de ne pas inventer de cause précise, mais le modèle propose quand même "un incident ponctuel dans notre chaîne logistique" — une explication plausible mais non fondée sur une information réelle. Cela illustre une tendance du modèle à combler les vides même quand on lui demande explicitement de ne pas le faire, si l'absence d'explication semble socialement ou commercialement inconfortable.
+
+## Partie 6 – Prompt Engineering pour le Machine Learning
+
+### Tâche 1 : Stratégies de traitement des données
+
+**Prompt utilisé**
+
+Tu es un data scientist expérimenté.
+
+Contexte : Dataset de capteurs IoT, 605 lignes, colonnes : temperature (float), humidity (float), pressure (float), consumption (float), status (catégorielle : normal/alerte/critique).
+
+Propose des stratégies pour traiter :
+
+Les valeurs manquantes
+Les doublons
+Les valeurs aberrantes
+Les variables catégorielles
+
+Pour chaque point, indique : la méthode de détection, la méthode de traitement, et les risques associés à un mauvais traitement.
+
+Format : une section par point, avec les 3 éléments demandés.
+
+**Réponse obtenue (synthèse)**
+Pour chacun des 4 axes (valeurs manquantes, doublons, outliers, variables catégorielles), le modèle propose : une méthode de détection avec code Python, une méthode de traitement adaptée au contexte IoT, et les risques d'un mauvais traitement. Point clé récurrent : ne jamais traiter une donnée isolément, mais toujours la croiser avec la variable `status`, car un "outlier" statistique peut en réalité correspondre à un vrai événement critique du capteur.
+
+**Capture d'écran**
+![Réponse nettoyage](./partie6_nettoyage.png)
+
+**Observation**
+Réponse de très bon niveau technique : code Python concret et exploitable, raisonnement contextualisé au domaine IoT (distinction entre bruit de capteur et anomalie réelle), et mise en garde pertinente sur le déséquilibre des classes qui pourrait biaiser un futur modèle vers la classe majoritaire "normal" — un risque directement lié à ce qui avait été vu dans la veille sur les métriques de classification déséquilibrées.
