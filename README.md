@@ -433,3 +433,46 @@ Réponds uniquement au format JSON avec les champs :
 
 **Observation**
 Classification cohérente : le modèle distingue bien un problème d'accès/authentification d'un problème de sécurité (qui aurait pu être une confusion possible, par exemple si le compte avait été piraté) ou d'un problème logiciel générique. JSON valide, catégorie choisie parmi la liste imposée.
+
+### Tâche 4 : Extraction d'informations depuis une facture
+
+**Prompt utilisé**
+
+Extrais les informations suivantes de la facture ci-dessous. Réponds uniquement en JSON valide avec les champs :
+{
+"numero_facture": "...",
+"date": "...",
+"client": "...",
+"montant_ht": ...,
+"tva": ...,
+"montant_ttc": ...
+}
+
+Si une information est absente du texte, mets la valeur null.
+
+Facture :
+"Facture n°FA-2026-0847
+Date : 12/09/2026
+Client : Entreprise Diallo & Fils
+Montant HT : 150 000 FCFA
+TVA (18%) : 27 000 FCFA
+Montant TTC : 177 000 FCFA"
+
+**Réponse obtenue**
+
+```json
+{
+  "numero_facture": "FA-2026-0847",
+  "date": "12/09/2026",
+  "client": "Entreprise Diallo & Fils",
+  "montant_ht": 150000,
+  "tva": 27000,
+  "montant_ttc": 177000
+}
+```
+
+**Capture d'écran**
+![Réponse facture](./partie5_facture.png)
+
+**Observation**
+Les 6 champs sont correctement extraits et les montants sont convertis en nombres purs (sans "FCFA" ni espaces), ce qui les rend directement exploitables par un programme. Aucun champ absent ici, donc la règle du `null` n'a pas pu être testée dans ce cas — un test avec une facture incomplète permettrait de vérifier ce comportement.
