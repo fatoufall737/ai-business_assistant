@@ -545,3 +545,45 @@ Pour chacun des 4 axes (valeurs manquantes, doublons, outliers, variables catég
 
 **Observation**
 Réponse de très bon niveau technique : code Python concret et exploitable, raisonnement contextualisé au domaine IoT (distinction entre bruit de capteur et anomalie réelle), et mise en garde pertinente sur le déséquilibre des classes qui pourrait biaiser un futur modèle vers la classe majoritaire "normal" — un risque directement lié à ce qui avait été vu dans la veille sur les métriques de classification déséquilibrées.
+
+### Tâche 2 : Visualisations pertinentes pour la consommation énergétique
+
+**Prompt utilisé**
+
+Tu es un data scientist expérimenté.
+
+Contexte : Dataset de capteurs IoT, 605 lignes, colonnes : temperature (float), humidity (float), pressure (float), consumption (float), status (catégorielle : normal/alerte/critique).
+
+Propose les visualisations les plus pertinentes pour comprendre la consommation énergétique d'un bâtiment (variable consumption).
+
+Pour chaque visualisation, indique :
+
+Le type de graphique
+Les variables utilisées
+L'objectif de la visualisation
+L'interprétation attendue
+
+Format : une section par visualisation proposée.
+
+**Réponse obtenue**
+
+1. **Histogramme / distribution de la consommation** — `sns.histplot(data=df, x='consumption', kde=True)` — objectif : identifier des régimes de fonctionnement distincts (multimodalité).
+   ![Visualisation 1](./partie6_visu1.png)
+
+2. **Boxplot consommation par statut** — `sns.boxplot(data=df, x='status', y='consumption')` — objectif : vérifier si la surconsommation précède une dégradation du système.
+   ![Visualisation 2](./partie6_visu2.png)
+
+3. **Matrice de corrélation (heatmap)** — `sns.heatmap(df.corr(), annot=True, cmap='coolwarm')` — objectif : identifier les variables environnementales les plus corrélées à la consommation.
+   ![Visualisation 3](./partie6_visu3.png)
+
+4. **Scatterplot température vs consommation, coloré par statut** — `sns.scatterplot(data=df, x='temperature', y='consumption', hue='status')` — objectif : localiser les points critiques dans l'espace température/consommation.
+   ![Visualisation 4](./partie6_visu4.png)
+
+5. **Pairplot des 4 variables numériques, coloré par statut** — `sns.pairplot(df, hue='status', vars=[...])` — objectif : vue d'ensemble des relations bivariées et séparation des classes.
+   ![Visualisation 5](./partie6_visu5.png)
+
+6. **Courbe temporelle de la consommation** — `sns.lineplot(data=df, x=df.index, y='consumption')` — objectif : détecter un signal précurseur avant un passage en alerte/critique (maintenance prédictive).
+   ![Visualisation 6](./partie6_visu6.png)
+
+**Observation**
+Les 6 visualisations proposées couvrent une progression logique : de l'analyse univariée (distribution) à l'analyse multivariée (pairplot), en passant par la relation avec la variable cible `status`. Le raisonnement métier est systématique (chaque graphique est justifié par une hypothèse exploitable, ex : maintenance prédictive, surchauffe), ce qui dépasse une simple liste technique de graphiques.
