@@ -629,3 +629,41 @@ Privilégier la régression linéaire comme baseline interprétable, puis compar
 
 **Observation**
 Le modèle identifie correctement qu'il s'agit d'un problème de régression (variable cible continue) et adapte systématiquement son analyse à la contrainte réelle du dataset : sa petite taille (605 lignes) est mentionnée comme facteur de risque pour chaque modèle complexe proposé, ce qui montre une prise en compte fine du contexte plutôt qu'une réponse générique.
+
+### Tâche 4 : Métriques de classification
+
+**Prompt utilisé**
+
+Tu es un expert en machine learning.
+
+Explique les métriques de classification suivantes : Accuracy, Precision, Recall, F1-score, ROC-AUC.
+
+Pour chaque métrique, indique :
+
+La définition
+Comment l'interpréter
+Un exemple concret (par exemple appliqué à la détection d'un statut "critique" parmi normal/alerte/critique)
+Dans quel contexte elle est particulièrement utile
+
+Format : une section par métrique.
+
+**Réponse obtenue (synthèse)**
+
+| Métrique  | Définition                          | Utile quand...                                           |
+| --------- | ----------------------------------- | -------------------------------------------------------- |
+| Accuracy  | (VP+VN)/total                       | Classes équilibrées uniquement                           |
+| Precision | VP/(VP+FP)                          | Le coût d'une fausse alerte est élevé                    |
+| Recall    | VP/(VP+FN)                          | Rater un cas positif est plus grave qu'une fausse alerte |
+| F1-score  | Moyenne harmonique precision/recall | Classes déséquilibrées, besoin d'une métrique unique     |
+| ROC-AUC   | Aire sous la courbe ROC             | Comparer des modèles indépendamment du seuil             |
+
+Chaque métrique a été illustrée avec le même exemple concret : détecter le statut "critique" (classe minoritaire) parmi normal/alerte/critique — ex : un modèle qui prédit toujours "normal" aurait une accuracy élevée (~95%) tout en étant inutile pour détecter les pannes.
+
+**Capture d'écran**
+![Métriques classification 1](./partie6_metriques_classif1.png)
+![Métriques classification 2](./partie6_metriques_classif2.png)
+![Métriques classification 3](./partie6_metriques_classif2.png)
+![Métriques classification 4](./partie6_metriques_classif2.png)
+
+**Observation**
+Le modèle relie systématiquement chaque métrique au même scénario concret (détection de "critique"), ce qui rend l'explication cohérente et applicable directement au dataset de l'atelier. Il ajoute même une nuance avancée non demandée (la courbe Precision-Recall comme alternative à l'AUC en cas de fort déséquilibre), ce qui dépasse une simple définition de cours.
