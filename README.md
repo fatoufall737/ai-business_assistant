@@ -379,3 +379,28 @@ Malgré des contraintes précises dans le prompt, la réponse ne les respecte pa
 Points positifs : structure claire (tableau), bonne identification des objectifs/résultats/recommandations, aucune donnée chiffrée inventée.
 
 Ce résultat montre qu'une contrainte énoncée dans le prompt n'est pas toujours suffisante pour garantir un respect strict — une formulation plus impérative (ex : "ne réponds qu'avec le résumé, sans aucun texte additionnel, question ou proposition") serait nécessaire pour un usage réellement automatisé.
+
+### Tâche 2 : Traduction
+
+**Prompt utilisé**
+
+Traduis le texte suivant du français vers l'anglais.
+
+Contraintes :
+
+Conserver le sens exact
+Conserver la structure du texte (mêmes paragraphes, même ordre)
+Conserver les termes techniques tels quels si nécessaire
+Ne pas résumer
+Ne rajoute aucune information absente du texte original
+
+Texte : "Notre service de livraison garantit une fraîcheur optimale grâce à notre chaîne du froid certifiée ISO 22000. Chaque commande est vérifiée avant expédition pour assurer la conformité avec les normes d'hygiène en vigueur."
+
+**Réponse obtenue**
+"Our delivery service guarantees optimal freshness thanks to our ISO 22000-certified cold chain. Each order is checked before shipping to ensure compliance with current hygiene standards."
+
+**Capture d'écran**
+![Réponse traduction](./partie5_traduction.png)
+
+**Observation**
+Contrairement à la Tâche 1 (résumé), toutes les contraintes ont été respectées ici : sens exact conservé, même structure (2 phrases, même ordre), terme technique "ISO 22000" conservé tel quel, rien de résumé ni ajouté. La tâche de traduction, plus mécanique, semble mieux se prêter au respect strict des contraintes qu'une tâche d'analyse/synthèse comme le résumé.
