@@ -903,3 +903,49 @@ Le modèle produit un résumé linéaire (paragraphe unique, pas de liste à puc
 **Observation**
 
 Le respect de la contrainte de longueur (~150 mots) a poussé le modèle vers un format différent de celui du Prompt A : plutôt qu'une liste par thème, il privilégie un texte continu, plus dense en information par mot mais moins facile à scanner rapidement qu'une liste à puces. La contrainte de longueur seule ne dit rien sur le format attendu (liste ? paragraphe ? public visé ?) — c'est un choix que le modèle a fait de lui-même, ce qui montre la limite d'un prompt qui ne spécifie qu'un seul paramètre.
+
+### Tâche 3 — Prompt C (avec plus de composants de prompt)
+
+**Prompt testé**
+
+Tu es analyste customer experience.
+
+Voici 6 retours clients laissés sur l'application Yassir :
+[6 retours clients Yassir - voir annexe]
+
+Rédige un résumé de ces retours destiné à l'équipe produit, en 150 mots maximum.
+Le résumé doit :
+
+Mentionner le sentiment général des utilisateurs
+Regrouper les problèmes par thème plutôt que de lister chaque retour individuellement
+Rester factuel, sans ajouter d'information absente des retours
+Adopter un ton neutre et professionnel
+
+**Réponse obtenue (synthèse)**
+
+Le modèle produit un résumé structuré par thème avec des sous-titres explicites (Fiabilité des commandes, Délais de livraison, Tarification, Performance technique, Comportement des livreurs), précédé d'une phrase sur le sentiment général et suivi d'une conclusion sur les axes d'amélioration prioritaires. Le format respecte toutes les consignes du prompt : regroupement thématique, ton neutre, absence d'information inventée.
+
+**Capture d'écran**
+![Prompt C - resume avec role et contraintes](./screenshots/partie8_prompt_c.png)
+
+**Observation**
+
+L'ajout de composants au prompt (rôle, destinataire, structure attendue, contraintes de fond) a produit un résultat nettement plus exploitable directement par une équipe produit : les sous-titres thématiques permettent une lecture rapide, et la contrainte "regrouper par thème" a été respectée à la lettre, contrairement au Prompt A et B où le regroupement thématique restait un choix du modèle plutôt qu'une consigne explicite. C'est le seul des trois prompts qui donne un contrôle réel sur la structure et l'audience du résumé, pas seulement sur sa longueur.
+
+Et le tableau de comparaison finale pour la Partie 8 :
+
+markdown
+
+### Comparaison des résultats
+
+| Critère                    | Prompt A                | Prompt B                     | Prompt C                                     |
+| -------------------------- | ----------------------- | ---------------------------- | -------------------------------------------- |
+| Contrôle de la longueur    | Aucun                   | Oui (150 mots)               | Oui (150 mots max)                           |
+| Structuration par thème    | Choix du modèle (liste) | Choix du modèle (paragraphe) | Imposée et respectée (sous-titres)           |
+| Ton / registre             | Neutre par défaut       | Neutre par défaut            | Neutre professionnel, conforme à la consigne |
+| Audience définie           | Non                     | Non                          | Oui (équipe produit)                         |
+| Reproductibilité du format | Faible                  | Faible                       | Élevée                                       |
+
+**Conclusion**
+
+Les trois prompts produisent des résumés fidèles au texte source, sans invention. La différence se joue sur le contrôle et la reproductibilité : le Prompt A laisse le modèle décider de tout (longueur, format, structure), le Prompt B ajoute un contrôle sur la longueur mais laisse le format libre, et le Prompt C — en précisant le rôle, l'audience, le format attendu et les contraintes de fond — est le seul à garantir un résultat prévisible et directement utilisable, peu importe le texte source fourni en entrée.
