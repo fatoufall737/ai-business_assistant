@@ -750,3 +750,108 @@ Le modèle restitue correctement le taux d'annulation (6,1 % au T3 2026, contre 
 **Observation**
 
 Le modèle a correctement extrait et restitué les informations du document, sans erreur ni invention. Il va même au-delà d'une simple restitution : il souligne de lui-même que la 3e cause d'annulation (erreurs/ruptures de stock, 18 %) n'est couverte par aucune action du plan — une observation critique pertinente, non demandée explicitement, qui montre une lecture analytique du document plutôt qu'un simple copier-coller d'information.
+
+markdown
+
+## Partie 7 – Prompt Engineering et RAG
+
+Test de trois approches pour répondre à une question à partir d'un document :
+sans document (A), avec document (B), avec document + contraintes (C).
+
+**Document utilisé** : rapport interne fictif "Service Livraison — 3e trimestre
+2026" (reconstitution, l'original ayant été créé dans une conversation
+antérieure non conservée).
+
+---
+
+### Tâche 1 — Prompt A (sans document)
+
+**Prompt testé**
+
+Quel a été le taux d'annulation des commandes du service de livraison au 3e
+trimestre 2026, et quelles actions ont été recommandées pour l'améliorer ?
+
+**Réponse obtenue (synthèse)**
+
+Le modèle indique ne pas avoir accès à un rapport spécifique sur ce sujet et refuse d'inventer un chiffre ou des recommandations précises. Il propose deux alternatives : recevoir le document, ou obtenir des informations générales et non chiffrées sur les causes typiques d'annulation dans les services de livraison.
+
+**Capture d'écran**
+![Prompt A - sans document](./screenshots/partie7_prompt_a.png)
+
+**Observation**
+
+Le modèle s'est correctement abstenu d'halluciner un taux d'annulation ou des recommandations spécifiques, malgré une question très précise (trimestre, année, métrique exacte) qui aurait pu l'inciter à "combler" le vide. Il distingue clairement les généralités sectorielles (qu'il peut fournir) des chiffres propres au rapport (qu'il ne peut pas connaître).
+
+⚠️ **Point méthodologique** : un premier test de ce prompt, mené dans une conversation ayant déjà accès à un autre rapport fictif construit plus tôt dans l'atelier, avait produit des chiffres exacts alors qu'aucun document n'avait été fourni — en raison d'un accès implicite via l'historique de conversation. Ce biais a été neutralisé pour ce test.
+
+---
+
+### Tâche 2 — Prompt B (avec document, sans contrainte)
+
+**Prompt testé**
+
+Voici un rapport interne :
+[rapport complet - voir annexe]
+
+Quel a été le taux d'annulation des commandes du service de livraison au 3e
+trimestre 2026, et quelles actions ont été recommandées pour l'améliorer ?
+
+**Réponse obtenue (synthèse)**
+
+Le modèle restitue correctement le taux d'annulation (6,1 % au T3 2026, contre 8,2 % au T2, au-dessus de l'objectif de 5 %) et liste les trois actions recommandées, en les reliant aux causes d'annulation correspondantes.
+
+**Capture d'écran**
+![Prompt B - avec document](./screenshots/partie7_prompt_b.png)
+
+**Observation**
+
+Réponse exacte et complète, sans erreur ni invention. Le modèle souligne de lui-même que la 3e cause d'annulation (ruptures de stock, 18 %) n'est couverte par aucune action du plan — une observation critique pertinente, non demandée, mais sans citation exacte du texte source.
+
+---
+
+### Tâche 3 — Prompt C (avec document + contraintes)
+
+**Prompt testé**
+
+[même rapport]
+
+Quel a été le taux d'annulation des commandes du service de livraison au 3e
+trimestre 2026, et quelles actions ont été recommandées pour l'améliorer ?
+
+Contraintes :
+
+Utilise uniquement les informations présentes dans le rapport ci-dessus.
+N'invente aucune information absente du rapport.
+Si une information n'est pas présente, indique-le clairement.
+Cite le passage exact du rapport qui appuie ta réponse, si disponible.
+
+**Question complémentaire testée**
+
+Quel est le nom du responsable qui a rédigé ce rapport ?
+
+**Réponse obtenue (synthèse)**
+
+Pour la question principale, le modèle restitue le taux et les actions en citant systématiquement les passages exacts entre guillemets, et signale l'absence d'action sur la 3e cause. Pour la question complémentaire (info absente du rapport), il répond explicitement que l'information n'est pas présente, sans tenter de deviner.
+
+**Capture d'écran**
+![Prompt C - avec document et contraintes](./screenshots/partie7_prompt_c.png)
+
+**Observation**
+
+Le respect des contraintes se voit dans la forme : chaque affirmation est appuyée par une citation exacte du rapport, contrairement au Prompt B (correct mais non sourcé passage par passage). Sur une question sans réponse dans le document, le modèle refuse catégoriquement d'inventer.
+
+---
+
+### Comparaison des résultats
+
+| Critère                 | Prompt A (sans doc)          | Prompt B (avec doc) | Prompt C (avec doc + contraintes) |
+| ----------------------- | ---------------------------- | ------------------- | --------------------------------- |
+| Accès au document       | Non                          | Oui                 | Oui                               |
+| Exactitude des chiffres | N/A (pas de chiffres donnés) | Exacte              | Exacte                            |
+| Risque d'hallucination  | Faible (refus explicite)     | Faible              | Très faible                       |
+| Signale l'info absente  | Oui (absence globale du doc) | Oui (spontané)      | Oui (systématique et demandé)     |
+| Cite le passage source  | Non                          | Non                 | Oui, systématiquement             |
+
+**Conclusion**
+
+Les trois prompts ont donné des réponses honnêtes, sans hallucination majeure — y compris le Prompt A, qui aurait pu être le plus à risque. La vraie différence se situe dans la **traçabilité** : le Prompt C est le seul à ancrer chaque affirmation dans une citation exacte du document, ce qui rend la réponse vérifiable et réduit le risque d'erreur silencieuse. Fournir le document (B) améliore l'exactitude par rapport à A, mais c'est l'ajout de contraintes explicites (C) qui garantit la fiabilité et la vérifiabilité de la réponse — un point essentiel dans un contexte métier où les décisions s'appuient sur ces informations.
