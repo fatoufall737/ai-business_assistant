@@ -404,3 +404,32 @@ Texte : "Notre service de livraison garantit une fraîcheur optimale grâce à n
 
 **Observation**
 Contrairement à la Tâche 1 (résumé), toutes les contraintes ont été respectées ici : sens exact conservé, même structure (2 phrases, même ordre), terme technique "ISO 22000" conservé tel quel, rien de résumé ni ajouté. La tâche de traduction, plus mécanique, semble mieux se prêter au respect strict des contraintes qu'une tâche d'analyse/synthèse comme le résumé.
+
+### Tâche 3 : Classification de ticket informatique
+
+**Prompt utilisé**
+
+Classe le ticket informatique suivant dans l'une des catégories : réseau, logiciel, matériel, sécurité, accès, autre.
+
+Ticket : "Depuis ce matin, je n'arrive plus à me connecter à mon compte, le mot de passe est refusé alors que je suis certain de le saisir correctement. Impossible d'accéder à mes fichiers."
+
+Réponds uniquement au format JSON avec les champs :
+{
+"categorie": "...",
+"justification": "..."
+}
+
+**Réponse obtenue**
+
+```json
+{
+  "categorie": "accès",
+  "justification": "Le problème concerne l'impossibilité de se connecter au compte malgré un mot de passe correct, ce qui empêche l'accès aux fichiers."
+}
+```
+
+**Capture d'écran**
+![Réponse ticket](./partie5_ticket.png)
+
+**Observation**
+Classification cohérente : le modèle distingue bien un problème d'accès/authentification d'un problème de sécurité (qui aurait pu être une confusion possible, par exemple si le compte avait été piraté) ou d'un problème logiciel générique. JSON valide, catégorie choisie parmi la liste imposée.
