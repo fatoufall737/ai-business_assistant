@@ -855,3 +855,30 @@ Le respect des contraintes se voit dans la forme : chaque affirmation est appuy�
 **Conclusion**
 
 Les trois prompts ont donné des réponses honnêtes, sans hallucination majeure — y compris le Prompt A, qui aurait pu être le plus à risque. La vraie différence se situe dans la **traçabilité** : le Prompt C est le seul à ancrer chaque affirmation dans une citation exacte du document, ce qui rend la réponse vérifiable et réduit le risque d'erreur silencieuse. Fournir le document (B) améliore l'exactitude par rapport à A, mais c'est l'ajout de contraintes explicites (C) qui garantit la fiabilité et la vérifiabilité de la réponse — un point essentiel dans un contexte métier où les décisions s'appuient sur ces informations.
+
+## Partie 8 – Évaluation et optimisation des prompts
+
+Test de trois versions de prompt pour résumer un texte, puis évaluation comparative des réponses obtenues.
+
+**Texte utilisé** : les 6 retours clients Yassir (mêmes avis que ceux analysés en début d'atelier).
+
+---
+
+### Tâche 1 — Prompt A (instruction minimale)
+
+**Prompt testé**
+
+Résume ce texte.
+
+[6 retours clients Yassir - voir annexe]
+
+**Réponse obtenue (synthèse)**
+
+Le modèle produit un résumé structuré en deux blocs (points positifs / points négatifs récurrents), suivi d'une phrase de synthèse sur la tendance générale. Chaque point est associé au(x) numéro(s) d'avis correspondant(s). Longueur non contrôlée : le résumé est assez détaillé (liste de 6 points négatifs distincts).
+
+**Capture d'écran**
+![Prompt A - resume](./screenshots/partie8_prompt_a.png)
+
+**Observation**
+
+Sans consigne de longueur ni de format, le modèle a spontanément choisi une structuration par thème (positif/négatif) plutôt qu'un résumé linéaire, et a même ajouté une phrase de synthèse interprétative non demandée ("tendance générale"). Le résultat est déjà exploitable, mais sa longueur et son niveau de détail dépendent entièrement du jugement du modèle, sans garantie de reproductibilité si le texte source était plus long.
