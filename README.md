@@ -699,59 +699,8 @@ Exemple clé retenu : une RMSE de 8 kWh alors que la MAE est de 5 kWh indique qu
 ![Métriques régression 1](./partie6_metriques_regression1.png)
 ![Métriques régression 2](./partie6_metriques_regression2.png)
 ![Métriques régression 1](./partie6_metriques_regression3.png)
-![Métriques régression 2](./partie6_metriques_regression4.png)
 **Observation**
 Le modèle explique clairement la relation entre RMSE et MAE comme indicateur indirect de la présence d'outliers (écart important entre les deux = quelques erreurs extrêmes), et relie systématiquement chaque métrique à un enjeu métier réel (dimensionnement électrique, risque de surcharge réseau) plutôt qu'à une simple définition mathématique abstraite.
-
-## Partie 7 – Prompt Engineering et RAG
-
-### Tâche 1 — Prompt A (sans document)
-
-**Prompt testé**
-
-Quel a été le taux d'annulation des commandes du service de livraison au 3e
-trimestre 2026, et quelles actions ont été recommandées pour l'améliorer ?
-
-**Réponse obtenue (synthèse)**
-
-Le modèle indique ne pas avoir accès à un rapport spécifique sur ce sujet et refuse d'inventer un chiffre ou des recommandations précises. Il propose deux alternatives : recevoir le document en question, ou obtenir des informations générales et non chiffrées sur les causes typiques d'annulation dans les services de livraison.
-
-**Capture d'écran**
-![Prompt A - sans document](./screenshots/partie7_prompt_a.png)
-
-**Observation**
-
-Le modèle s'est correctement abstenu d'halluciner un taux d'annulation ou des recommandations spécifiques, malgré une question formulée de façon très précise (trimestre, année, métrique exacte) qui aurait pu l'inciter à "combler" le vide par une réponse plausible mais fausse. Il distingue clairement ce qu'il peut faire sans le document (généralités sectorielles) de ce qu'il ne peut pas faire (chiffres propres au rapport).
-
-⚠️ **Point méthodologique** : un premier test de ce même prompt, mené dans une conversation ayant déjà accès à un autre rapport fictif (construit plus tôt dans l'atelier), avait produit des chiffres exacts alors qu'aucun document n'avait été fourni — en raison d'un accès implicite via l'historique de conversation / la fonctionnalité "Rechercher dans les conversations passées". Ce biais a été neutralisé pour ce test en réutilisant la conversation d'origine, distincte de celle contenant le rapport concerné par la question.
-
-### Tâche 2 — Prompt B (avec document, sans contrainte)
-
-**Document fourni**
-Rapport interne "Service Livraison — 3e trimestre 2026" (reconstitution,
-l'original ayant été créé dans une conversation antérieure non conservée) —
-voir le rapport complet en annexe du fichier.
-
-**Prompt testé**
-
-Voici un rapport interne :
-[rapport complet - voir annexe]
-
-Quel a été le taux d'annulation des commandes du service de livraison au 3e
-trimestre 2026, et quelles actions ont été recommandées pour l'améliorer ?
-
-**Réponse obtenue (synthèse)**
-
-Le modèle restitue correctement le taux d'annulation (6,1 % au T3 2026, contre 8,2 % au T2, toujours au-dessus de l'objectif de 5 %) et liste les trois actions recommandées, en les reliant explicitement aux causes d'annulation correspondantes (synchronisation des prix ↔ 42 % des annulations, renfort des effectifs ↔ 28 %, contrôle des frais additionnels des livreurs).
-
-**Capture d'écran**
-![Prompt B - avec document](./screenshots/partie7_prompt_b.png)
-
-**Observation**
-
-Le modèle a correctement extrait et restitué les informations du document, sans erreur ni invention. Il va même au-delà d'une simple restitution : il souligne de lui-même que la 3e cause d'annulation (erreurs/ruptures de stock, 18 %) n'est couverte par aucune action du plan — une observation critique pertinente, non demandée explicitement, qui montre une lecture analytique du document plutôt qu'un simple copier-coller d'information.
-
-markdown
 
 ## Partie 7 – Prompt Engineering et RAG
 
@@ -776,7 +725,7 @@ trimestre 2026, et quelles actions ont été recommandées pour l'améliorer ?
 Le modèle indique ne pas avoir accès à un rapport spécifique sur ce sujet et refuse d'inventer un chiffre ou des recommandations précises. Il propose deux alternatives : recevoir le document, ou obtenir des informations générales et non chiffrées sur les causes typiques d'annulation dans les services de livraison.
 
 **Capture d'écran**
-![Prompt A - sans document](./screenshots/partie7_prompt_a.png)
+![Prompt A - sans document](./partie7_prompt_a.png)
 
 **Observation**
 
@@ -801,7 +750,7 @@ trimestre 2026, et quelles actions ont été recommandées pour l'améliorer ?
 Le modèle restitue correctement le taux d'annulation (6,1 % au T3 2026, contre 8,2 % au T2, au-dessus de l'objectif de 5 %) et liste les trois actions recommandées, en les reliant aux causes d'annulation correspondantes.
 
 **Capture d'écran**
-![Prompt B - avec document](./screenshots/partie7_prompt_b.png)
+![Prompt B - avec document](./partie7_prompt_b.png)
 
 **Observation**
 
@@ -834,7 +783,7 @@ Quel est le nom du responsable qui a rédigé ce rapport ?
 Pour la question principale, le modèle restitue le taux et les actions en citant systématiquement les passages exacts entre guillemets, et signale l'absence d'action sur la 3e cause. Pour la question complémentaire (info absente du rapport), il répond explicitement que l'information n'est pas présente, sans tenter de deviner.
 
 **Capture d'écran**
-![Prompt C - avec document et contraintes](./screenshots/partie7_prompt_c.png)
+![Prompt C - avec document et contraintes](./partie7_prompt_c.png)
 
 **Observation**
 
@@ -877,13 +826,12 @@ Résume ce texte.
 Le modèle produit un résumé structuré en deux blocs (points positifs / points négatifs récurrents), suivi d'une phrase de synthèse sur la tendance générale. Chaque point est associé au(x) numéro(s) d'avis correspondant(s). Longueur non contrôlée : le résumé est assez détaillé (liste de 6 points négatifs distincts).
 
 **Capture d'écran**
-![Prompt A - resume](./screenshots/partie8_prompt_a.png)
+![Prompt A - resume](./partie8_prompt_a.png)
 
 **Observation**
 
 Sans consigne de longueur ni de format, le modèle a spontanément choisi une structuration par thème (positif/négatif) plutôt qu'un résumé linéaire, et a même ajouté une phrase de synthèse interprétative non demandée ("tendance générale"). Le résultat est déjà exploitable, mais sa longueur et son niveau de détail dépendent entièrement du jugement du modèle, sans garantie de reproductibilité si le texte source était plus long.
 
-markdown
 
 ### Tâche 2 — Prompt B (résumé en 150 mots)
 
@@ -898,7 +846,7 @@ Résume ce texte en 150 mots.
 Le modèle produit un résumé linéaire (paragraphe unique, pas de liste à puces), qui couvre les mêmes thèmes que le Prompt A mais de façon plus condensée et fluide, avec des transitions entre les points. Chaque affirmation reste associée au(x) numéro(s) d'avis correspondant(s). Le résumé se termine par une phrase de synthèse sur les axes d'amélioration attendus.
 
 **Capture d'écran**
-![Prompt B - resume 150 mots](./screenshots/partie8_prompt_b.png)
+![Prompt B - resume 150 mots](./partie8_prompt_b.png)
 
 **Observation**
 
@@ -926,7 +874,7 @@ Adopter un ton neutre et professionnel
 Le modèle produit un résumé structuré par thème avec des sous-titres explicites (Fiabilité des commandes, Délais de livraison, Tarification, Performance technique, Comportement des livreurs), précédé d'une phrase sur le sentiment général et suivi d'une conclusion sur les axes d'amélioration prioritaires. Le format respecte toutes les consignes du prompt : regroupement thématique, ton neutre, absence d'information inventée.
 
 **Capture d'écran**
-![Prompt C - resume avec role et contraintes](./screenshots/partie8_prompt_c.png)
+![Prompt C - resume avec role et contraintes](./partie8_prompt_c.png)
 
 **Observation**
 
@@ -934,7 +882,6 @@ L'ajout de composants au prompt (rôle, destinataire, structure attendue, contra
 
 Et le tableau de comparaison finale pour la Partie 8 :
 
-markdown
 
 ### Comparaison des résultats
 
